@@ -1,0 +1,314 @@
+% ============================================================
+%  Introduction to NLP — Research Project Proposal Template
+%  2 pages max (excluding references)
+%
+%  TOGGLE — change the flag below to switch between versions:
+%    \instructionstrue  → full version: grey explanations + blue examples visible
+%    \instructionsfalse → clean version: section headers and student text only
+% ============================================================
+\documentclass[11pt, a4paper]{article}
+
+% --- Version toggle -----------------------------------------
+\newif\ifinstructions
+\instructionstrue   % <-- change to \instructionsfalse for the clean version
+
+% --- Packages -----------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage[authoryear,round]{natbib}
+
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{soul}        % for \hl (yellow highlight)
+\usepackage{tabularx}
+\usepackage{array}
+
+% --- Colors -------------------------------------------------
+\definecolor{exgray}{HTML}{888780}       % explanation text
+\definecolor{exblue}{HTML}{185FA5}       % example text
+\definecolor{highlight}{HTML}{FFE066}    % yellow highlight for key phrases
+\definecolor{sectioncolor}{HTML}{2C2C2A}
+\definecolor{rulegray}{HTML}{B4B2A9}
+
+% --- Convenience commands -----------------------------------
+
+% Grey explanation paragraph — hidden in clean version
+\newcommand{\explain}[1]{%
+  \ifinstructions
+    \par\vspace{2pt}%
+    {\small\color{exgray} #1}%
+    \par\vspace{2pt}%
+  \fi
+}
+
+% Grey guiding question — hidden in clean version
+\newcommand{\guideline}[1]{%
+  \ifinstructions
+    \par\vspace{3pt}%
+    {\small\color{exgray}\textit{#1}}%
+    \par\vspace{1pt}%
+  \fi
+}
+
+% Blue example answer — hidden in clean version
+\newcommand{\example}[1]{%
+  \ifinstructions
+    \par\vspace{1pt}%
+    {\small\color{exblue} #1}%
+    \par\vspace{4pt}%
+  \fi
+}
+
+% Yellow-highlighted key phrase — plain text in clean version
+\newcommand{\keyphrase}[1]{%
+  \ifinstructions
+    \sethlcolor{highlight}\hl{#1}%
+  \else
+    #1%
+  \fi
+}
+
+% Student fill-in placeholder
+\newcommand{\fillhere}[1]{%
+  \par\vspace{2pt}%
+  \textit{\textcolor{gray}{#1}}%
+  \par\vspace{2pt}%
+}
+
+
+% --- Section formatting -------------------------------------
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{sectioncolor}}
+  {\thesection.}{0.5em}{}[\vspace{-8pt}\noindent\rule{\linewidth}{0.2pt}]
+
+% --- Header / Footer ----------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\textit{TAR --- Research Project Proposal}}
+\fancyfoot[C]{\small\thepage}
+
+% ============================================================
+\begin{document}
+
+% --- Title block --------------------------------------------
+\begin{center}
+  {\LARGE\bfseries Working Title}\\[8pt]
+\end{center}
+\vspace{2pt}
+
+% --- How to use this template (visible in instructor version only) ---
+\ifinstructions
+\vspace{6pt}
+\noindent{\small\color{exgray}
+\textbf{How to use this template}
+
+Throughout this template, \textcolor{exgray}{\textbf{grey text}} provides instructions and guiding questions for each section.
+\textcolor{exblue}{\textbf{Blue text}} shows concrete examples of what a strong answer looks like --- use it as a reference, do not copy it.
+Phrases \keyphrase{highlighted in yellow} are key phrases you can use in your proposal.
+Italic grey placeholders such as \textit{\textcolor{gray}{<your text here>}} mark where your own writing should go.
+
+\smallskip
+\textbf{Submission}
+
+Write your proposal by filling in the placeholder text throughout the document.
+When you are ready to submit, change \texttt{\textbackslash instructionstrue} to \texttt{\textbackslash instructionsfalse} at the top of the \texttt{.tex} file (line 13), recompile, and submit the resulting \textbf{PDF}.
+The proposal must not exceed \textbf{3 pages} excluding references.
+
+\smallskip
+\textbf{References}
+
+\explain{References are \textbf{not} counted toward the 2-page limit. Add your references to the \texttt{references.bib} file. Each entry has a unique key (e.g.\ \texttt{devlin2019bert}) that you use in \texttt{\textbackslash citep\{\}} and \texttt{\textbackslash citet\{\}} commands. The reference list below is generated automatically from that file when you compile.}
+
+\explain{How to cite in the text:
+\begin{itemize}[leftmargin=*, itemsep=1pt, topsep=2pt]
+  \item Parenthetical: \texttt{\textbackslash citep\{key\}} produces \textcolor{exblue}{(Author, Year)}
+  \item Author as subject: \texttt{\textbackslash citet\{key\}} produces \textcolor{exblue}{Author (Year)}
+  \item Multiple references: \texttt{\textbackslash citep\{key1,key2\}} produces \textcolor{exblue}{(Author1, Year1; Author2, Year2)}
+\end{itemize}}
+
+
+\noindent\textcolor{rulegray}{\rule{\linewidth}{0.4pt}}
+\vspace{4pt}
+\fi
+
+% ============================================================
+% SECTION 1 — BASICS
+% ============================================================
+\section{Basics}
+
+\begin{tabular}{@{}ll}
+  \textbf{Project topic:} & \fillhere{<Project topic assigned from the TAR 2026 topic list.>}   \\[6pt]
+  \textbf{Team:} & \fillhere{<Team name.>} \\[2pt]
+  \textbf{Team members:}  & \fillhere{<Full Name>; <JMBAG>} \\[2pt]
+                          & \fillhere{<Full Name>; <JMBAG>} \\[2pt]
+                          & \fillhere{<Full Name>; <JMBAG>} \\
+\end{tabular}
+% ============================================================
+% SECTION 2 — ELEVATOR PITCH
+% ============================================================
+\section{Elevator Pitch}
+
+\explain{Describe your project in 2--3 sentences as if you had 30 seconds to explain it to someone unfamiliar with the topic. Name the \textbf{problem}, the \textbf{approach}, and the expected \textbf{contribution} --- in that order. Write this section \textbf{last}, even though it appears first. It is the abstract of your abstract.}
+
+\guideline{(1) What problem does your work address, and why does it matter?}
+\example{``Despite the rapid growth of NLP benchmarks, most evaluate models in English only, leaving multilingual generalization largely unmeasured.''}
+
+\guideline{(2) What is your approach?}
+\example{``We investigate whether cross-lingual transfer from pre-trained multilingual models can close this gap on low-resource Slavic languages.''}
+
+\guideline{(3) What will your work contribute?}
+\example{``Our study produces a new benchmark and a set of empirical findings that will inform future multilingual model design.''}
+
+\fillhere{<Your 2--3 sentence elevator pitch.>}
+
+% ============================================================
+% SECTION 3 — MOTIVATION
+% ============================================================
+\section{Motivation}
+
+\explain{If you can bring references to support your claims, do that. Feel free to use the phrases \keyphrase{highlighted in yellow} as is or their paraphrases.}
+
+\guideline{Start big. What is the broad, general problem you are addressing? The bigger the better.}
+\example{``The number of NLP publications has grown exponentially over the past decade \citep{joshi2020state, conneau2020xlmr}, and language diversity remains a fundamental challenge for the field.''}
+
+\guideline{What particular, focused problem are you addressing?}
+\example{``Despite this growth, the \keyphrase{main goal addressed by this paper} is understanding to what extent current pre-trained models generalize across typologically different languages without task-specific fine-tuning data.''}
+
+\guideline{Why is this an important problem?}
+\example{``\keyphrase{It is an important goal because} the majority of the world's languages are low-resource, and excluding them from NLP research perpetuates a language divide with real societal consequences \citep{joshi2020state, lauscher2020zero}.''}
+
+\guideline{Why is this a non-trivial, hard problem?}
+\example{``\keyphrase{This is hard to do because} language typology, script systems, and data availability interact in complex ways that make it difficult to predict when and why transfer succeeds or fails.''}
+
+\fillhere{<Your motivation, following the four-step structure above. Approx.\ 150 words.>}
+
+% ============================================================
+% SECTION 4 — GAP
+% ============================================================
+\section{Gap}
+
+\explain{Show what was done and what is missing. Think wider than just your topic: what is the broad class of problems your work is related to? Usually you will identify 3--4 relevant papers, which you will use as a starting point for your project. \textbf{This step is critical.} Do a thorough and systematic related work analysis \textit{before} starting work on the project, to avoid solving a non-existing problem. The gap must be clear; continue monitoring related work as you proceed. If things change, revise your plan.}
+
+\guideline{What has been done in the past?}
+\example{``Pre-trained multilingual models such as mBERT and XLM-R have shown strong cross-lingual transfer on high-resource language pairs \citep{devlin2019bert, conneau2020xlmr, hu2020xtreme}.''}
+
+\guideline{What is the problem with existing work?}
+\example{``However, evaluations are dominated by a small set of languages \citep{joshi2020state}. Low-resource Slavic languages are rarely included \citep{hu2020xtreme, lauscher2020zero}. Existing benchmarks do not control for domain shift, making it hard to isolate the contribution of cross-lingual transfer from domain mismatch \citep{conneau2020xlmr}. Thus, no single existing study provides a comprehensive picture of transfer in this setting.''}
+
+\guideline{What is the missing part?}
+\example{``Paper X evaluates cross-lingual transfer but only on high-resource languages. Paper Y covers low-resource languages but lacks domain control. Paper Z does both, but the data is not made public. \keyphrase{To the best of our knowledge}, our work is the first to evaluate cross-lingual transfer systematically across seven low-resource Slavic languages under controlled domain conditions.''}
+
+\fillhere{<Your gap analysis, following the three-step structure above. Approx.\ 150 words.>}
+
+% ============================================================
+% SECTION 5 — RESEARCH QUESTIONS \& CONTRIBUTIONS
+% ============================================================
+\section{Research Questions \& Contributions}
+
+\explain{List your research questions (RQs). An RQ is a question your study will answer --- what will it add to our knowledge compared to related work? Good RQs start with: ``What is the relationship between\ldots'', ``What are the factors that affect\ldots'', ``What types of X exist\ldots'' (exploratory), ``How to do X\ldots'' (engineering). Avoid ``Can X do Y?'' unless you are confident it can, or will provide strong theoretical or empirical evidence that it cannot.}
+
+\explain{For each RQ, list your planned \textbf{contributions} --- the tangible, reusable results your study will produce. A contribution can be a framework, a dataset, a model, a thorough analysis, or a research agenda. You will typically have 1--3 contributions.}
+
+\example{``To enable the study of cross-lingual transfer in low-resource Slavic languages, this paper addresses three research questions and makes the following contributions:
+
+\textbf{RQ1:} How well does zero-shot cross-lingual transfer from XLM-R generalize to low-resource Slavic languages on NER?\\
+\textit{Contribution:} We report a systematic evaluation across seven languages and three domains, providing the most comprehensive picture to date of transfer performance in this setting.
+
+\textbf{RQ2:} What linguistic factors predict transfer success or failure?\\
+\textit{Contribution:} We introduce a diagnostic framework that correlates model errors with morphological complexity, script type, and training data size.
+
+\textbf{RQ3:} How to improve transfer for the lowest-resource languages?\\
+\textit{Contribution:} We propose and evaluate a lightweight adaptation strategy using automatically translated pivot data. Our results will pave the path for more inclusive multilingual NLP benchmarking.''}
+
+\noindent\textbf{RQ1:} 
+\fillhere{
+  Is it possible to detect a conspiracy theory if given a text in which
+  actors, actions, etc. are masked?}
+\textit{Contribution:}
+\fillhere{This will give us a better insight in conspiracy theory texts. We will
+determine if conspiracy theries follow specific forms that are independent of
+factual truth and that can be used to differentiate between critically written
+text and a conspiracy theory.}
+
+\noindent\textbf{RQ2:} \fillhere{
+Should the pretraining set contain conspiracy theories?
+}
+\textit{Contribution:} \fillhere{
+We aim to determine if additional pretraining on harmful data such as
+conspiracy theories can be done in a safe way which also improves the model.
+If proven possible this could lead to other research regarding AI safety}
+
+\noindent\textbf{RQ3:} \fillhere{
+Can we addionally fine-tune the model to be resistant to sarcasm?
+}
+\textit{Contribution:} \fillhere{<What tangible result will this produce?>}
+
+\noindent\textbf{RQ4:} \fillhere{
+How does learning conspiracy theories affect models performance on other tasks?
+}
+\textit{Contribution:} \fillhere{<What tangible result will this produce?>}
+
+% ============================================================
+% SECTION 6 — EXPERIMENTAL SETUP
+% ============================================================
+\section{Experimental Setup}
+
+\explain{Briefly describe your experimental plan across the four areas below. Each choice must be \textbf{justified} with respect to your RQs. For example,  saying ``we will use BERT'' without explaining why teaches nothing. This section should be concrete enough to show the pipeline is feasible, but you do not need a full methods section. Close with a short paragraph on risks.}
+
+\paragraph{Datasets.}
+\explain{What data will you use? Is it publicly available? Describe its key characteristics (size, domain, language, annotation scheme). If you plan to collect or synthesize data, briefly explain how.}
+\example{``We will use the WikiAnn dataset \citep{pan2017wikiann}, which provides NER annotations for 176 languages including all seven target Slavic languages. It is publicly available, large-scale, and has been used as a standard benchmark in prior cross-lingual transfer work \citep{hu2020xtreme, lauscher2020zero}, making our results directly comparable.''}
+\fillhere{<Your dataset description and justification.>}
+
+\paragraph{Models \& Baselines.}
+\explain{What systems will you build, fine-tune, or prompt? What baselines will you compare against and why? Justify why these models are appropriate for your RQs.}
+\example{``Our primary model is XLM-R\textsubscript{large} \citep{conneau2020xlmr}, chosen for its strong multilingual coverage of Slavic scripts. We compare against mBERT \citep{devlin2019bert} as a weaker multilingual baseline and a language-specific monolingual model as an upper-bound oracle. This setup directly addresses RQ1 by isolating the effect of multilingual pre-training scale.''}
+\fillhere{<Your model and baseline description and justification.>}
+
+\paragraph{Evaluation.}
+\explain{What metrics will you use to measure performance? Why are these metrics appropriate for your RQs? Note any known limitations of these metrics.}
+\example{``We report span-level F\textsubscript{1} following the CoNLL evaluation standard, which is the de facto metric for NER and enables direct comparison with prior work. We also report per-language and per-entity-type breakdowns to address RQ2. We note that F\textsubscript{1} does not distinguish between boundary and label errors, which we will supplement with a qualitative error analysis.''}
+\fillhere{<Your evaluation metrics and justification.>}
+
+\paragraph{General Methodology.}
+\explain{Describe your experimental pipeline in 3--5 steps. Walk the reader through how you will go from raw data to an answer for each RQ. This does not need to be exhaustive --- just enough to show the plan is concrete and well thought through.}
+\example{``(1) Preprocess and reformat WikiAnn splits for all seven target languages. (2) Fine-tune XLM-R and mBERT on the English training split only (zero-shot transfer setup). (3) Evaluate all models on each target language test set and record F\textsubscript{1} per language and entity type (RQ1). (4) Correlate error rates with language-level features such as morphological complexity and script type (RQ2). (5) Apply the pivot-data adaptation strategy and re-evaluate on the three lowest-resource languages (RQ3).''}
+\fillhere{<Your methodology, described in 3--5 steps.>}
+
+\paragraph{Risks.}
+\explain{What could go wrong? For each risk, state the impact on your RQs, and your mitigation or fallback plan.}
+\example{``\textit{Data availability:} WikiAnn coverage for two target languages is sparse ($<$1k sentences); if quality is insufficient we will fall back to silver data generated via projection from a related high-resource language. \textit{Compute:} Fine-tuning XLM-R\textsubscript{large} requires significant GPU memory; if unavailable we will use the base variant, which has been shown to close 85\% of the gap at a fraction of the cost.''}
+\fillhere{<1--3 concrete risks with mitigations.>}
+
+% ============================================================
+% SECTION 7 — JUSTIFICATION FOR API CREDITS
+% ============================================================
+\section{Justification for API Credits}
+
+\explain{Write your justification for using the API credits as a mini-pitch --- be \textbf{specific}. ``We need the API to generate synthetic training data for low-resource language X because no open dataset exists'' is compelling. ``We want to try a large model'' is not. You must also include a \textbf{fallback plan} --- your project must be viable regardless of whether credits are awarded.}
+
+\guideline{Use case: what specifically would you use the API for, and which RQ does it serve?}
+\example{``We plan to use the API to generate silver-standard NER annotations for three languages for which no labeled data exists, directly enabling RQ3.''}
+
+\guideline{Alternative plan: if you do not receive credits, what is your fallback?}
+\example{``We will restrict the study to the four languages for which labeled data already exists, narrowing the scope of RQ3 but keeping the core contributions intact.''}
+
+\fillhere{<Your justification, following the structure above. Approx.\ 150 words.>}
+
+% ============================================================
+% REFERENCES
+% ============================================================
+
+\vspace{4pt}
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

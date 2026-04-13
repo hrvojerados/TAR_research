@@ -1,0 +1,175 @@
+% ============================================================
+%  references.bib
+%  Add your references here. Each entry has a unique key
+%  (e.g. devlin2019bert) that you use in \citep{} and \citet{}.
+%
+%  HOW TO ADD A REFERENCE:
+%  1. Find your paper on Google Scholar or Semantic Scholar
+%  2. Click "Cite" -> "BibTeX" and copy the entry
+%  3. Paste it below and adjust the key to a short memorable name
+%     following the convention:  lastname + year + firstword
+%     e.g. devlin2019bert, vaswani2017attention
+%
+%  ENTRY TYPES:
+%  @inproceedings  — conference or workshop paper
+%  @article        — journal article
+%  @book           — book
+%  @inbook         — chapter in a book
+%  @phdthesis      — doctoral dissertation
+%  @misc           — preprint (e.g. arXiv), website, or other
+============================================================
+
+
+% --- @inproceedings: conference / workshop paper ------------
+%
+%  Required fields: author, title, booktitle, year
+%  Optional fields: pages, address, publisher, editor, volume
+
+@inproceedings{devlin2019bert,
+  author    = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
+  title     = {{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding},
+  booktitle = {Proceedings of the 2019 Conference of the North American Chapter of the
+               Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)},
+  pages     = {4171--4186},
+  year      = {2019},
+  address   = {Minneapolis, Minnesota},
+  publisher = {Association for Computational Linguistics},
+}
+
+@inproceedings{conneau2020xlmr,
+  author    = {Conneau, Alexis and Khandelwal, Kartikay and Goyal, Naman and Chaudhary, Vishrav
+               and Wenzek, Guillaume and Guzm{\'a}n, Francisco and Grave, {\'E}douard and
+               Ott, Myle and Zettlemoyer, Luke and Stoyanov, Veselin},
+  title     = {Unsupervised Cross-lingual Representation Learning at Scale},
+  booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational
+               Linguistics (ACL)},
+  pages     = {8440--8451},
+  year      = {2020},
+  address   = {Online},
+  publisher = {Association for Computational Linguistics},
+}
+
+@inproceedings{vaswani2017attention,
+  author    = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob
+               and Jones, Llion and Gomez, Aidan N. and Kaiser, {\L}ukasz and Polosukhin, Illia},
+  title     = {Attention Is All You Need},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  volume    = {30},
+  pages     = {5998--6008},
+  year      = {2017},
+  publisher = {Curran Associates, Inc.},
+}
+
+
+% --- @article: journal article ------------------------------
+%
+%  Required fields: author, title, journal, year
+%  Optional fields: volume, number, pages
+
+@article{tjong2003conll,
+  author  = {Tjong Kim Sang, Erik F. and De Meulder, Fien},
+  title   = {Introduction to the {CoNLL}-2003 Shared Task:
+             Language-Independent Named Entity Recognition},
+  journal = {Proceedings of the Seventh Conference on Natural Language Learning
+             at HLT-NAACL 2003 (CoNLL)},
+  pages   = {142--147},
+  year    = {2003},
+}
+
+
+% --- @book: book --------------------------------------------
+%
+%  Required fields: author (or editor), title, publisher, year
+%  Optional fields: edition, address, series, volume
+
+@book{jurafsky2023slp,
+  author    = {Jurafsky, Daniel and Martin, James H.},
+  title     = {Speech and Language Processing},
+  edition   = {3rd},
+  publisher = {Prentice Hall},
+  year      = {2023},
+  note      = {Draft available at \url{https://web.stanford.edu/~jurafsky/slp3/}},
+}
+
+
+% --- @misc: arXiv preprint or website -----------------------
+%
+%  Required fields: author, title, year
+%  Optional fields: howpublished, note, url
+
+@misc{brown2020gpt3,
+  author        = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie
+                   and Kaplan, Jared and Dhariwal, Prafulla and Neelakantan, Arvind
+                   and Shyam, Pranav and Sastry, Girish and Askell, Amanda and Amodei, Dario},
+  title         = {Language Models are Few-Shot Learners},
+  year          = {2020},
+  howpublished  = {arXiv preprint arXiv:2005.14165},
+}
+
+
+% --- @phdthesis: doctoral dissertation ----------------------
+%
+%  Required fields: author, title, school, year
+
+@phdthesis{ruder2019thesis,
+  author = {Ruder, Sebastian},
+  title  = {Neural Transfer Learning for Natural Language Processing},
+  school = {National University of Ireland, Galway},
+  year   = {2019},
+}
+
+
+% ============================================================
+%  ADD YOUR OWN REFERENCES BELOW THIS LINE
+%  (paste BibTeX entries from Google Scholar / Semantic Scholar)
+% ============================================================
+
+@inproceedings{joshi2020state,
+  author    = {Joshi, Pratik and Santy, Sebastin and Budhiraja, Amar and
+               Bali, Kalika and Choudhury, Monojit},
+  title     = {The State and Fate of Linguistic Diversity and Inclusion
+               in the {NLP} World},
+  booktitle = {Proceedings of the 58th Annual Meeting of the Association
+               for Computational Linguistics (ACL)},
+  pages     = {6282--6293},
+  year      = {2020},
+  address   = {Online},
+  publisher = {Association for Computational Linguistics},
+}
+
+@inproceedings{hu2020xtreme,
+  author    = {Hu, Junjie and Ruder, Sebastian and Siddhant, Aditya and
+               Neubig, Graham and Firat, Orhan and Johnson, Melvin},
+  title     = {{XTREME}: A Massively Multilingual Multi-task Benchmark for
+               Evaluating Cross-lingual Generalization},
+  booktitle = {Proceedings of the 37th International Conference on Machine
+               Learning (ICML)},
+  pages     = {4411--4421},
+  year      = {2020},
+  publisher = {PMLR},
+}
+
+@inproceedings{lauscher2020zero,
+  author    = {Lauscher, Anne and Ravishankar, Vinit and Vuli{\'c}, Ivan and
+               Glava{\v{s}}, Goran},
+  title     = {From Zero to Hero: On the Limitations of Zero-Shot Language
+               Transfer with Multilingual Transformers},
+  booktitle = {Proceedings of the 2020 Conference on Empirical Methods in
+               Natural Language Processing (EMNLP)},
+  pages     = {4483--4499},
+  year      = {2020},
+  address   = {Online},
+  publisher = {Association for Computational Linguistics},
+}
+
+@inproceedings{pan2017wikiann,
+  author    = {Pan, Xiaoman and Zhang, Boliang and May, Jonathan and
+               Nothman, Joel and Knight, Kevin and Ji, Heng},
+  title     = {Cross-lingual Name Tagging and Linking for 282 Languages},
+  booktitle = {Proceedings of the 55th Annual Meeting of the Association
+               for Computational Linguistics (ACL)},
+  pages     = {1946--1958},
+  year      = {2017},
+  address   = {Vancouver, Canada},
+  publisher = {Association for Computational Linguistics},
+}

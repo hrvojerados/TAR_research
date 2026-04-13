@@ -1,0 +1,33 @@
+\begin{thebibliography}{}
+
+\bibitem[Conneau et~al., 2020]{conneau2020xlmr}
+Conneau, A., Khandelwal, K., Goyal, N., Chaudhary, V., Wenzek, G., Guzm{\'a}n, F., Grave, {\'E}., Ott, M., Zettlemoyer, L., and Stoyanov, V. (2020).
+\newblock Unsupervised cross-lingual representation learning at scale.
+\newblock In {\em Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (ACL)}, pages 8440--8451, Online. Association for Computational Linguistics.
+
+\bibitem[Devlin et~al., 2019]{devlin2019bert}
+Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K. (2019).
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language understanding.
+\newblock In {\em Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)}, pages 4171--4186, Minneapolis, Minnesota. Association for Computational Linguistics.
+
+\bibitem[Hu et~al., 2020]{hu2020xtreme}
+Hu, J., Ruder, S., Siddhant, A., Neubig, G., Firat, O., and Johnson, M. (2020).
+\newblock {XTREME}: A massively multilingual multi-task benchmark for evaluating cross-lingual generalization.
+\newblock In {\em Proceedings of the 37th International Conference on Machine Learning (ICML)}, pages 4411--4421. PMLR.
+
+\bibitem[Joshi et~al., 2020]{joshi2020state}
+Joshi, P., Santy, S., Budhiraja, A., Bali, K., and Choudhury, M. (2020).
+\newblock The state and fate of linguistic diversity and inclusion in the {NLP} world.
+\newblock In {\em Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (ACL)}, pages 6282--6293, Online. Association for Computational Linguistics.
+
+\bibitem[Lauscher et~al., 2020]{lauscher2020zero}
+Lauscher, A., Ravishankar, V., Vuli{\'c}, I., and Glava{\v{s}}, G. (2020).
+\newblock From zero to hero: On the limitations of zero-shot language transfer with multilingual transformers.
+\newblock In {\em Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 4483--4499, Online. Association for Computational Linguistics.
+
+\bibitem[Pan et~al., 2017]{pan2017wikiann}
+Pan, X., Zhang, B., May, J., Nothman, J., Knight, K., and Ji, H. (2017).
+\newblock Cross-lingual name tagging and linking for 282 languages.
+\newblock In {\em Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (ACL)}, pages 1946--1958, Vancouver, Canada. Association for Computational Linguistics.
+
+\end{thebibliography}
