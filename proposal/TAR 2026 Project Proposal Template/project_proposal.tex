@@ -191,7 +191,7 @@ Our study will produce new empirical findings that help advance this field.}
 \guideline{Why is this a non-trivial, hard problem?}
 \example{``\keyphrase{This is hard to do because} language typology, script systems, and data availability interact in complex ways that make it difficult to predict when and why transfer succeeds or fails.''}
 
-\fillhere{<Your motivation, following the four-step structure above. Approx.\ 150 words.>}
+\fillhere{Missinformation is a }
 
 % ============================================================
 % SECTION 4 — GAP
@@ -272,27 +272,27 @@ How does learning conspiracy theories affect models performance on other tasks?
 \paragraph{Datasets.}
 \explain{What data will you use? Is it publicly available? Describe its key characteristics (size, domain, language, annotation scheme). If you plan to collect or synthesize data, briefly explain how.}
 \example{``We will use the WikiAnn dataset \citep{pan2017wikiann}, which provides NER annotations for 176 languages including all seven target Slavic languages. It is publicly available, large-scale, and has been used as a standard benchmark in prior cross-lingual transfer work \citep{hu2020xtreme, lauscher2020zero}, making our results directly comparable.''}
-\fillhere{<Your dataset description and justification.>}
+\fillhere{LOCO (description of LOCO)}
 
 \paragraph{Models \& Baselines.}
 \explain{What systems will you build, fine-tune, or prompt? What baselines will you compare against and why? Justify why these models are appropriate for your RQs.}
 \example{``Our primary model is XLM-R\textsubscript{large} \citep{conneau2020xlmr}, chosen for its strong multilingual coverage of Slavic scripts. We compare against mBERT \citep{devlin2019bert} as a weaker multilingual baseline and a language-specific monolingual model as an upper-bound oracle. This setup directly addresses RQ1 by isolating the effect of multilingual pre-training scale.''}
-\fillhere{<Your model and baseline description and justification.>}
+\fillhere{some model that is easy to additionaly pretrain. \citep{fort2023bigfoot} paper is our baseline}
 
 \paragraph{Evaluation.}
 \explain{What metrics will you use to measure performance? Why are these metrics appropriate for your RQs? Note any known limitations of these metrics.}
 \example{``We report span-level F\textsubscript{1} following the CoNLL evaluation standard, which is the de facto metric for NER and enables direct comparison with prior work. We also report per-language and per-entity-type breakdowns to address RQ2. We note that F\textsubscript{1} does not distinguish between boundary and label errors, which we will supplement with a qualitative error analysis.''}
-\fillhere{<Your evaluation metrics and justification.>}
+\fillhere{For sure the same metrics as \citep{fort2023bigfoot} (so we can compare results), but there should be some discussion regarding evaluation on other tasks}
 
 \paragraph{General Methodology.}
 \explain{Describe your experimental pipeline in 3--5 steps. Walk the reader through how you will go from raw data to an answer for each RQ. This does not need to be exhaustive --- just enough to show the plan is concrete and well thought through.}
 \example{``(1) Preprocess and reformat WikiAnn splits for all seven target languages. (2) Fine-tune XLM-R and mBERT on the English training split only (zero-shot transfer setup). (3) Evaluate all models on each target language test set and record F\textsubscript{1} per language and entity type (RQ1). (4) Correlate error rates with language-level features such as morphological complexity and script type (RQ2). (5) Apply the pivot-data adaptation strategy and re-evaluate on the three lowest-resource languages (RQ3).''}
-\fillhere{<Your methodology, described in 3--5 steps.>}
+\fillhere{You can write something about masking}
 
 \paragraph{Risks.}
 \explain{What could go wrong? For each risk, state the impact on your RQs, and your mitigation or fallback plan.}
 \example{``\textit{Data availability:} WikiAnn coverage for two target languages is sparse ($<$1k sentences); if quality is insufficient we will fall back to silver data generated via projection from a related high-resource language. \textit{Compute:} Fine-tuning XLM-R\textsubscript{large} requires significant GPU memory; if unavailable we will use the base variant, which has been shown to close 85\% of the gap at a fraction of the cost.''}
-\fillhere{<1--3 concrete risks with mitigations.>}
+\fillhere{I am sure you can think of something.}
 
 % ============================================================
 % SECTION 7 — JUSTIFICATION FOR API CREDITS
