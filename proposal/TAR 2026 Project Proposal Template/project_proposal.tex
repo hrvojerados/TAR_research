@@ -167,7 +167,10 @@ The proposal must not exceed \textbf{3 pages} excluding references.
 \guideline{(3) What will your work contribute?}
 \example{``Our study produces a new benchmark and a set of empirical findings that will inform future multilingual model design.''}
 
-\fillhere{<Your 2--3 sentence elevator pitch.>}
+\fillhere{
+With the advent of social media, the emergence of conspiracy theories has become frequent.
+We investigate the phenomenon of conspiracy in the context of Large Language Models.
+Our study will produce new empirical findings that help advance this field.}
 
 % ============================================================
 % SECTION 3 — MOTIVATION
@@ -206,7 +209,9 @@ The proposal must not exceed \textbf{3 pages} excluding references.
 \guideline{What is the missing part?}
 \example{``Paper X evaluates cross-lingual transfer but only on high-resource languages. Paper Y covers low-resource languages but lacks domain control. Paper Z does both, but the data is not made public. \keyphrase{To the best of our knowledge}, our work is the first to evaluate cross-lingual transfer systematically across seven low-resource Slavic languages under controlled domain conditions.''}
 
-\fillhere{<Your gap analysis, following the three-step structure above. Approx.\ 150 words.>}
+\fillhere{
+Analysis of the semantic structure of conspiracy theories has been a common problem in psychoanalysis. \citep{fort2023bigfoot} addresses this problem by training the model on data in which topical words have been masked. The issue with this paper is the usage of outdated models such as BART and SVM. There is potential to build on their work by using LLMs. \citep{platt2022toward} is based on a similar idea. The goal of that paper is to differentiate between conspiracy theory text and more general misinformation text. Another interesting research direction deals with pretraining . \citep{levy2021investigating} investigates GPT- 2's ability to generate conspiracy text. They explain this is a consequence of conspiracy text being deeply rooted in the pretraining data. The problem with this paper is that it deals with the outdated GPT-2 .
+}
 
 % ============================================================
 % SECTION 5 — RESEARCH QUESTIONS \& CONTRIBUTIONS
@@ -221,6 +226,7 @@ The proposal must not exceed \textbf{3 pages} excluding references.
 
 \textbf{RQ1:} How well does zero-shot cross-lingual transfer from XLM-R generalize to low-resource Slavic languages on NER?\\
 \textit{Contribution:} We report a systematic evaluation across seven languages and three domains, providing the most comprehensive picture to date of transfer performance in this setting.
+More efficient.
 
 \textbf{RQ2:} What linguistic factors predict transfer success or failure?\\
 \textit{Contribution:} We introduce a diagnostic framework that correlates model errors with morphological complexity, script type, and training data size.

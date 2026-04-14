@@ -3,89 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: project_proposal.aux
 The style file: apalike.bst
 Database file #1: references.bib
-I was expecting a `{' or a `('---line 14 of file references.bib
- : %  @inproceedings  
- :                    — conference or workshop paper
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 15 of file references.bib
- : %  @article        
- :                    — journal article
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 16 of file references.bib
- : %  @book           
- :                    — book
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 17 of file references.bib
- : %  @inbook         
- :                    — chapter in a book
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 18 of file references.bib
- : %  @phdthesis      
- :                    — doctoral dissertation
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 19 of file references.bib
- : %  @misc           
- :                    — preprint (e.g. arXiv), website, or other
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 23 of file references.bib
- : % --- @inproceedings: 
- :                       conference / workshop paper ------------
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 64 of file references.bib
- : % --- @article: 
- :                 journal article ------------------------------
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 80 of file references.bib
- : % --- @book: 
- :              book --------------------------------------------
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 95 of file references.bib
- : % --- @misc: 
- :              arXiv preprint or website -----------------------
-I'm skipping whatever remains of this entry
-I was expecting a `{' or a `('---line 110 of file references.bib
- : % --- @phdthesis: 
- :                   doctoral dissertation ----------------------
-I'm skipping whatever remains of this entry
-You've used 6 entries,
+You've used 9 entries,
             1935 wiz_defined-function locations,
-            508 strings with 5582 characters,
-and the built_in function-call counts, 4138 in all, are:
-= -- 429
-> -- 193
-< -- 6
-+ -- 72
-- -- 70
-* -- 325
-:= -- 630
-add.period$ -- 24
-call.type$ -- 6
-change.case$ -- 65
-chr.to.int$ -- 6
-cite$ -- 6
-duplicate$ -- 174
-empty$ -- 271
-format.name$ -- 76
-if$ -- 889
+            526 strings with 6333 characters,
+and the built_in function-call counts, 5865 in all, are:
+= -- 603
+> -- 267
+< -- 9
++ -- 98
+- -- 96
+* -- 456
+:= -- 894
+add.period$ -- 33
+call.type$ -- 9
+change.case$ -- 93
+chr.to.int$ -- 9
+cite$ -- 9
+duplicate$ -- 253
+empty$ -- 394
+format.name$ -- 105
+if$ -- 1259
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 6
-newline$ -- 33
-num.names$ -- 18
-pop$ -- 78
+missing$ -- 9
+newline$ -- 48
+num.names$ -- 27
+pop$ -- 118
 preamble$ -- 1
-purify$ -- 65
+purify$ -- 93
 quote$ -- 0
-skip$ -- 145
+skip$ -- 205
 stack$ -- 0
-substring$ -- 314
-swap$ -- 72
-text.length$ -- 6
+substring$ -- 438
+swap$ -- 100
+text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 36
+type$ -- 54
 warning$ -- 0
-while$ -- 30
+while$ -- 45
 width$ -- 0
-write$ -- 91
-(There were 11 error messages)
+write$ -- 130

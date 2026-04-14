@@ -10,6 +10,11 @@ Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K. (2019).
 \newblock {BERT}: Pre-training of deep bidirectional transformers for language understanding.
 \newblock In {\em Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)}, pages 4171--4186, Minneapolis, Minnesota. Association for Computational Linguistics.
 
+\bibitem[Fort et~al., 2023]{fort2023bigfoot}
+Fort, M., Tian, Z., Gabel, E., Georgiades, N., Sauer, N., Dakota, D., and K{\"u}bler, S. (2023).
+\newblock Bigfoot in big tech: Detecting out of domain conspiracy theories.
+\newblock In {\em Proceedings of the 14th international conference on recent advances in natural language processing}, pages 353--363.
+
 \bibitem[Hu et~al., 2020]{hu2020xtreme}
 Hu, J., Ruder, S., Siddhant, A., Neubig, G., Firat, O., and Johnson, M. (2020).
 \newblock {XTREME}: A massively multilingual multi-task benchmark for evaluating cross-lingual generalization.
@@ -25,9 +30,19 @@ Lauscher, A., Ravishankar, V., Vuli{\'c}, I., and Glava{\v{s}}, G. (2020).
 \newblock From zero to hero: On the limitations of zero-shot language transfer with multilingual transformers.
 \newblock In {\em Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 4483--4499, Online. Association for Computational Linguistics.
 
+\bibitem[Levy et~al., 2021]{levy2021investigating}
+Levy, S., Saxon, M., and Wang, W.~Y. (2021).
+\newblock Investigating memorization of conspiracy theories in text generation.
+\newblock In {\em Findings of the Association for Computational Linguistics: ACL-IJCNLP 2021}, pages 4718--4729.
+
 \bibitem[Pan et~al., 2017]{pan2017wikiann}
 Pan, X., Zhang, B., May, J., Nothman, J., Knight, K., and Ji, H. (2017).
 \newblock Cross-lingual name tagging and linking for 282 languages.
 \newblock In {\em Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (ACL)}, pages 1946--1958, Vancouver, Canada. Association for Computational Linguistics.
+
+\bibitem[Platt et~al., 2022]{platt2022toward}
+Platt, A., Brown, J., and Venske, A. (2022).
+\newblock Toward detecting conspiracy language in misinformation documents.
+\newblock In {\em Proceedings of the 2022 Computers and People Research Conference}, pages 1--4.
 
 \end{thebibliography}

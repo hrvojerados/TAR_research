@@ -10,20 +10,57 @@
 %     following the convention:  lastname + year + firstword
 %     e.g. devlin2019bert, vaswani2017attention
 %
-%  ENTRY TYPES:
-%  @inproceedings  — conference or workshop paper
-%  @article        — journal article
-%  @book           — book
-%  @inbook         — chapter in a book
-%  @phdthesis      — doctoral dissertation
-%  @misc           — preprint (e.g. arXiv), website, or other
 ============================================================
 
 
-% --- @inproceedings: conference / workshop paper ------------
 %
 %  Required fields: author, title, booktitle, year
 %  Optional fields: pages, address, publisher, editor, volume
+@article{miani2022loco,
+  title={LOCO: The 88-million-word language of conspiracy corpus},
+  author={Miani, Alessandro and Hills, Thomas and Bangerter, Adrian},
+  journal={Behavior research methods},
+  volume={54},
+  number={4},
+  pages={1794--1817},
+  year={2022},
+  publisher={Springer}
+}
+
+@inproceedings{fort2023bigfoot,
+  title={Bigfoot in big tech: Detecting out of domain conspiracy theories},
+  author={Fort, Matthew and Tian, Zuoyu and Gabel, Elizabeth and Georgiades, Nina and Sauer, Noah and Dakota, Daniel and K{\"u}bler, Sandra},
+  booktitle={Proceedings of the 14th international conference on recent advances in natural language processing},
+  pages={353--363},
+  year={2023}
+}
+
+@article{samory2018government,
+  title={'The Government Spies Using Our Webcams' The Language of Conspiracy Theories in Online Discussions},
+  author={Samory, Mattia and Mitra, Tanushree},
+  journal={Proceedings of the ACM on Human-Computer Interaction},
+  volume={2},
+  number={CSCW},
+  pages={1--24},
+  year={2018},
+  publisher={ACM New York, NY, USA}
+}
+
+@inproceedings{platt2022toward,
+  title={Toward detecting conspiracy language in misinformation documents},
+  author={Platt, Alana and Brown, Jonathan and Venske, Amanda},
+  booktitle={Proceedings of the 2022 Computers and People Research Conference},
+  pages={1--4},
+  year={2022}
+}
+
+@inproceedings{levy2021investigating,
+  title={Investigating memorization of conspiracy theories in text generation},
+  author={Levy, Sharon and Saxon, Michael and Wang, William Yang},
+  booktitle={Findings of the Association for Computational Linguistics: ACL-IJCNLP 2021},
+  pages={4718--4729},
+  year={2021}
+}
 
 @inproceedings{devlin2019bert,
   author    = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
@@ -61,10 +98,6 @@
 }
 
 
-% --- @article: journal article ------------------------------
-%
-%  Required fields: author, title, journal, year
-%  Optional fields: volume, number, pages
 
 @article{tjong2003conll,
   author  = {Tjong Kim Sang, Erik F. and De Meulder, Fien},
@@ -77,10 +110,6 @@
 }
 
 
-% --- @book: book --------------------------------------------
-%
-%  Required fields: author (or editor), title, publisher, year
-%  Optional fields: edition, address, series, volume
 
 @book{jurafsky2023slp,
   author    = {Jurafsky, Daniel and Martin, James H.},
@@ -92,10 +121,6 @@
 }
 
 
-% --- @misc: arXiv preprint or website -----------------------
-%
-%  Required fields: author, title, year
-%  Optional fields: howpublished, note, url
 
 @misc{brown2020gpt3,
   author        = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie
@@ -107,9 +132,6 @@
 }
 
 
-% --- @phdthesis: doctoral dissertation ----------------------
-%
-%  Required fields: author, title, school, year
 
 @phdthesis{ruder2019thesis,
   author = {Ruder, Sebastian},
