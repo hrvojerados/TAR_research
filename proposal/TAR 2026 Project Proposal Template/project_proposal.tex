@@ -191,7 +191,13 @@ Our study will produce new empirical findings that help advance this field.}
 \guideline{Why is this a non-trivial, hard problem?}
 \example{``\keyphrase{This is hard to do because} language typology, script systems, and data availability interact in complex ways that make it difficult to predict when and why transfer succeeds or fails.''}
 
-\fillhere{Missinformation is a }
+\fillhere{
+Misinformation is a big problem in today's world. One specific type of misinformation that stands out is conspiracy theories. A conspiracy theory is a piece of text that contains very radical
+conclusions which aren't built on a rational basis. An interesting problem regarding conspiracy theories in NLP is: "Can conspiracy theories be characterized only by their semantic structure?" At
+first glance , it appears not, but there exists research such as \citep{fort2023bigfoot} that makes this a promising path to take. This is also a relevant problem since conspiracy theories evolve
+according to the current state of the world. It would be very beneficial to produce a model that can classify a conspiracy theory only based on its semantic structure. Since we plan on using modern
+methods of LLMs, a question of pretraining data also arises. Will our model work better if we additionally pretrain it on a conspiracy theory corpus?
+}
 
 % ============================================================
 % SECTION 4 — GAP
@@ -210,7 +216,11 @@ Our study will produce new empirical findings that help advance this field.}
 \example{``Paper X evaluates cross-lingual transfer but only on high-resource languages. Paper Y covers low-resource languages but lacks domain control. Paper Z does both, but the data is not made public. \keyphrase{To the best of our knowledge}, our work is the first to evaluate cross-lingual transfer systematically across seven low-resource Slavic languages under controlled domain conditions.''}
 
 \fillhere{
-Analysis of the semantic structure of conspiracy theories has been a common problem in psychoanalysis. \citep{fort2023bigfoot} addresses this problem by training the model on data in which topical words have been masked. The issue with this paper is the usage of outdated models such as BART and SVM. There is potential to build on their work by using LLMs. \citep{platt2022toward} is based on a similar idea. The goal of that paper is to differentiate between conspiracy theory text and more general misinformation text. Another interesting research direction deals with pretraining . \citep{levy2021investigating} investigates GPT- 2's ability to generate conspiracy text. They explain this is a consequence of conspiracy text being deeply rooted in the pretraining data. The problem with this paper is that it deals with the outdated GPT-2 .
+Analysis of the semantic structure of conspiracy theories has been a common problem in psychoanalysis. \citep{fort2023bigfoot} addresses this problem by training the model on data in which topical
+words have been masked. The issue with this paper is the usage of outdated models such as BART and SVM. There is potential to build on their work by using LLMs. \citep{platt2022toward} is based on
+a similar idea. The goal of that paper is to differentiate between conspiracy theory text and more general misinformation text. Another interesting research direction deals with pretraining
+. \citep{levy2021investigating} investigates GPT- 2's ability to generate conspiracy text. They explain this is a consequence of conspiracy text being deeply rooted in the pretraining data. The
+problem with this paper is that it deals with the outdated GPT-2.
 }
 
 % ============================================================
