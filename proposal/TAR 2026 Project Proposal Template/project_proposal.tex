@@ -10,7 +10,7 @@
 
 % --- Version toggle -----------------------------------------
 \newif\ifinstructions
-\instructionstrue   % <-- change to \instructionsfalse for the clean version
+\instructionsfalse   % <-- change to \instructionsfalse for the clean version
 
 % --- Packages -----------------------------------------------
 \usepackage[margin=1in]{geometry}
@@ -100,7 +100,8 @@
 
 % --- Title block --------------------------------------------
 \begin{center}
-  {\LARGE\bfseries Working Title}\\[8pt]
+  {\LARGE\bfseries Psycholinguistic Conspiracy Marker Extraction and De-
+tection}\\[8pt]
 \end{center}
 \vspace{2pt}
 
@@ -145,11 +146,10 @@ The proposal must not exceed \textbf{3 pages} excluding references.
 \section{Basics}
 
 \begin{tabular}{@{}ll}
-  \textbf{Project topic:} & \fillhere{<Project topic assigned from the TAR 2026 topic list.>}   \\[6pt]
-  \textbf{Team:} & \fillhere{<Team name.>} \\[2pt]
-  \textbf{Team members:}  & \fillhere{<Full Name>; <JMBAG>} \\[2pt]
-                          & \fillhere{<Full Name>; <JMBAG>} \\[2pt]
-                          & \fillhere{<Full Name>; <JMBAG>} \\
+  \textbf{Project topic:} & \fillhere{Psycholinguistic Conspiracy Marker Extraction and Detection}   \\[6pt]
+  \textbf{Team:} & \fillhere{Racing cats} \\[2pt]
+  \textbf{Team members:}  & \fillhere{Hrvoje Radoš; 0036548995} \\[2pt]
+                          & \fillhere{Irma Zečević; <JMBAG>} \\
 \end{tabular}
 % ============================================================
 % SECTION 2 — ELEVATOR PITCH
@@ -246,31 +246,54 @@ More efficient.
 
 \noindent\textbf{RQ1:} 
 \fillhere{
-  Is it possible to detect a conspiracy theory if given a text in which
-  actors, actions, etc. are masked?}
+  To what extent do modern LLMs utilize emergent reasoning to identify the semantic structure of conspiracy theories when all context dependent entities are dynamically masked?}
 \textit{Contribution:}
 \fillhere{This will give us a better insight in conspiracy theory texts. We will
-determine if conspiracy theries follow specific forms that are independent of
+determine if conspiracy theories follow specific forms that are independent of
 factual truth and that can be used to differentiate between critically written
-text and a conspiracy theory.}
+text and a conspiracy theory. We hope to achieve better results than \citep{fort2023bigfoot}.
+We would also like to try out different masking methods which they didn't try as they mentioned
+this in their conclusion.}
 
-\noindent\textbf{RQ2:} \fillhere{
+\noindent\textbf{RQ2:} 
+\fillhere{
+How are different conspiracy theories related content-wise?}
+\textit{Contribution:}
+\fillhere{
+This is also mentioned in the conclusion of \citep{fort2023bigfoot}. 
+It's much easier to cite them, "Further research will need to investigate in more
+detail the inter-relatedness between different 
+conspiracy theories. A better understanding of how
+they relate content-wise may allow us a better 
+understanding of how to create a robust training set
+that can be used to detect conspiracy theories out
+of domain."
+}
+
+\noindent\textbf{RQ3:} \fillhere{
 Should the pretraining set contain conspiracy theories?
 }
 \textit{Contribution:} \fillhere{
 We aim to determine if additional pretraining on harmful data such as
 conspiracy theories can be done in a safe way which also improves the model.
-If proven possible this could lead to other research regarding AI safety}
-
-\noindent\textbf{RQ3:} \fillhere{
-Can we addionally fine-tune the model to be resistant to sarcasm?
-}
-\textit{Contribution:} \fillhere{<What tangible result will this produce?>}
+If proven possible this could lead to other research regarding AI safety.}
 
 \noindent\textbf{RQ4:} \fillhere{
 How does learning conspiracy theories affect models performance on other tasks?
 }
-\textit{Contribution:} \fillhere{<What tangible result will this produce?>}
+\textit{Contribution:} \fillhere{
+This doesn't seem too hard to test, but it would give some results that could be
+useful beyond computation social science.
+}
+
+\noindent\textbf{RQ5:} \fillhere{
+Can we addionally fine-tune the model to be resistant to sarcasm?
+}
+\textit{Contribution:} \fillhere{
+We haven't found any research that deals with this so it would be an interesting problem.
+But we should investigate other work a bit more because there probably is something.
+}
+
 
 % ============================================================
 % SECTION 6 — EXPERIMENTAL SETUP
