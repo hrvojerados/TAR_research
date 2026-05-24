@@ -149,7 +149,7 @@ The proposal must not exceed \textbf{3 pages} excluding references.
   \textbf{Project topic:} & \fillhere{Psycholinguistic Conspiracy Marker Extraction and Detection}   \\[6pt]
   \textbf{Team:} & \fillhere{Racing cats} \\[2pt]
   \textbf{Team members:}  & \fillhere{Hrvoje Radoš; 0036548995} \\[2pt]
-                          & \fillhere{Irma Zečević; <JMBAG>} \\
+                          & \fillhere{Irma Zečević; 0036547615} \\
 \end{tabular}
 % ============================================================
 % SECTION 2 — ELEVATOR PITCH
@@ -168,9 +168,10 @@ The proposal must not exceed \textbf{3 pages} excluding references.
 \example{``Our study produces a new benchmark and a set of empirical findings that will inform future multilingual model design.''}
 
 \fillhere{
-With the advent of social media, the emergence of conspiracy theories has become frequent.
-We investigate the phenomenon of conspiracy in the context of Large Language Models.
-Our study will produce new empirical findings that help advance this field.}
+With the advent of social media, the emergence of conspiracy theories has become frequent. Conspiracy theories can be used to spread fear and misinformation, which makes it important to differentiate fiction from the truth.
+We investigate the phenomenon of conspiracy in the context of large language models, focusing on identifying common textual patterns and detecting them in text-based digital media.
+Our goal is to produce new empirical findings that will contribute to the field and the detection of conspiracies.
+}
 
 % ============================================================
 % SECTION 3 — MOTIVATION
@@ -192,11 +193,8 @@ Our study will produce new empirical findings that help advance this field.}
 \example{``\keyphrase{This is hard to do because} language typology, script systems, and data availability interact in complex ways that make it difficult to predict when and why transfer succeeds or fails.''}
 
 \fillhere{
-Misinformation is a big problem in today's world. One specific type of misinformation that stands out is conspiracy theories. A conspiracy theory is a piece of text that contains very radical
-conclusions which aren't built on a rational basis. An interesting problem regarding conspiracy theories in NLP is: "Can conspiracy theories be characterized only by their semantic structure?" At
-first glance , it appears not, but there exists research such as \citep{fort2023bigfoot} that makes this a promising path to take. This is also a relevant problem since conspiracy theories evolve
-according to the current state of the world. It would be very beneficial to produce a model that can classify a conspiracy theory only based on its semantic structure. Since we plan on using modern
-methods of LLMs, a question of pretraining data also arises. Will our model work better if we additionally pretrain it on a conspiracy theory corpus?
+Misinformation is a big problem in today's world. One specific type of misinformation that stands out is conspiracy theories. A conspiracy theory is a piece of text that contains very radical conclusions which aren't built on a rational basis. An interesting problem regarding conspiracy theories in NLP is "Can conspiracy theories be characterized only by their semantic structure?"
+At first glance, it appears not, but there exists research such as \citep{fort2023bigfoot} that makes this a promising path to take. This is also a relevant problem since conspiracy theories evolve according to the current state of the world. It would be very beneficial to produce a model that can classify a conspiracy theory only based on its semantic structure. Since we plan on using modern methods of LLMs, a question of pretraining data also arises. Will our model work better if we additionally pretrain it on a conspiracy theory corpus?
 }
 
 % ============================================================
@@ -222,7 +220,6 @@ a similar idea. The goal of that paper is to differentiate between conspiracy th
 . \citep{levy2021investigating} investigates GPT- 2's ability to generate conspiracy text. They explain this is a consequence of conspiracy text being deeply rooted in the pretraining data. The
 problem with this paper is that it deals with the outdated GPT-2.
 }
-
 % ============================================================
 % SECTION 5 — RESEARCH QUESTIONS \& CONTRIBUTIONS
 % ============================================================
@@ -244,9 +241,14 @@ More efficient.
 \textbf{RQ3:} How to improve transfer for the lowest-resource languages?\\
 \textit{Contribution:} We propose and evaluate a lightweight adaptation strategy using automatically translated pivot data. Our results will pave the path for more inclusive multilingual NLP benchmarking.''}
 
+\noindent\textbf{NB:}\smallskip
+\fillhere{
+While researching this subject, many possible research questions came to mind. Currently, we don't believe 
+it's feasible to answer all of them in one semester. But, we would still like to write them here and hear some feedback.
+}
 \noindent\textbf{RQ1:} 
 \fillhere{
-  To what extent do modern LLMs utilize emergent reasoning to identify the semantic structure of conspiracy theories when all context dependent entities are dynamically masked?}
+  How well do modern LLMs identify the semantic structure and specific language patterns of conspiracy theories? What if we fine-tune our model on texts where all context dependent entities are dynamically masked?}
 \textit{Contribution:}
 \fillhere{This will give us a better insight in conspiracy theory texts. We will
 determine if conspiracy theories follow specific forms that are independent of
@@ -257,7 +259,7 @@ this in their conclusion.}
 
 \noindent\textbf{RQ2:} 
 \fillhere{
-How are different conspiracy theories related content-wise?}
+How are different conspiracy theories related content-wise ?}
 \textit{Contribution:}
 \fillhere{
 This is also mentioned in the conclusion of \citep{fort2023bigfoot}. 
@@ -267,7 +269,7 @@ conspiracy theories. A better understanding of how
 they relate content-wise may allow us a better 
 understanding of how to create a robust training set
 that can be used to detect conspiracy theories out
-of domain."
+of domain.".
 }
 
 \noindent\textbf{RQ3:} \fillhere{
@@ -275,23 +277,19 @@ Should the pretraining set contain conspiracy theories?
 }
 \textit{Contribution:} \fillhere{
 We aim to determine if additional pretraining on harmful data such as
-conspiracy theories can be done in a safe way which also improves the model.
-If proven possible this could lead to other research regarding AI safety.}
+conspiracy theories can be done in a safe way which also improves the model in terms of conspiracy theory detection. By pretraining the model on explicitly labeled conspiracies and non-conspiracies, the model could become better at recognizing harmful data. This could lead us to safer models and become an opening for future research in the field of AI safety.}
 
 \noindent\textbf{RQ4:} \fillhere{
 How does learning conspiracy theories affect models performance on other tasks?
 }
 \textit{Contribution:} \fillhere{
-This doesn't seem too hard to test, but it would give some results that could be
-useful beyond computation social science.
-}
+Our goal is to find out whether a model pretrained on conspiracy theories will adopt unexpected characteristics when answering prompts or trying to complete tasks. \citep{marino-etal-2025-linguistic} notes a particular difference in language patterns used in conspiracy theory-related texts, for example a more emotional tone of speaking. We aim to discover whether such patterns would become prevalent in the models output.}
 
 \noindent\textbf{RQ5:} \fillhere{
-Can we addionally fine-tune the model to be resistant to sarcasm?
+Can we additionally fine-tune the model to be resistant to sarcasm?
 }
 \textit{Contribution:} \fillhere{
-We haven't found any research that deals with this so it would be an interesting problem.
-But we should investigate other work a bit more because there probably is something.
+ This seems like a hard problem so we think it would be interesting to tackle it. We haven't searched for current research on this topic, but we believe there has been some research regarding this and that there is still a lot of work to be done here.
 }
 
 
@@ -305,27 +303,28 @@ But we should investigate other work a bit more because there probably is someth
 \paragraph{Datasets.}
 \explain{What data will you use? Is it publicly available? Describe its key characteristics (size, domain, language, annotation scheme). If you plan to collect or synthesize data, briefly explain how.}
 \example{``We will use the WikiAnn dataset \citep{pan2017wikiann}, which provides NER annotations for 176 languages including all seven target Slavic languages. It is publicly available, large-scale, and has been used as a standard benchmark in prior cross-lingual transfer work \citep{hu2020xtreme, lauscher2020zero}, making our results directly comparable.''}
-\fillhere{LOCO (description of LOCO)}
+\fillhere{We will be using \textit{LOCO or Language Conspiracy Corpus}, introduced by \citep{miani2022loco}. \textit{LOCO} is an 88-million-token corpus composed of topic-matched conspiracy and mainstream documents harvested from 150 websites. LOCO includes an abundant (N=237) set of linguistic features, ranging from the document upload date to factual reporting annotations. }
 
 \paragraph{Models \& Baselines.}
 \explain{What systems will you build, fine-tune, or prompt? What baselines will you compare against and why? Justify why these models are appropriate for your RQs.}
 \example{``Our primary model is XLM-R\textsubscript{large} \citep{conneau2020xlmr}, chosen for its strong multilingual coverage of Slavic scripts. We compare against mBERT \citep{devlin2019bert} as a weaker multilingual baseline and a language-specific monolingual model as an upper-bound oracle. This setup directly addresses RQ1 by isolating the effect of multilingual pre-training scale.''}
-\fillhere{some model that is easy to additionaly pretrain. \citep{fort2023bigfoot} paper is our baseline}
+\fillhere{We will use Llama-3.1-8B as the baseline model for our paper. The LLama-3.1 is a collection of pretrained and instruction tuned differently sized models (8B, 70B and 405B) that input and output text only. All of models from the collection are Open-Source and well-documented since their release in 2024. making them well-suited for our research and further pretraining. We will have to take data contamination into account.}
 
 \paragraph{Evaluation.}
 \explain{What metrics will you use to measure performance? Why are these metrics appropriate for your RQs? Note any known limitations of these metrics.}
 \example{``We report span-level F\textsubscript{1} following the CoNLL evaluation standard, which is the de facto metric for NER and enables direct comparison with prior work. We also report per-language and per-entity-type breakdowns to address RQ2. We note that F\textsubscript{1} does not distinguish between boundary and label errors, which we will supplement with a qualitative error analysis.''}
-\fillhere{For sure the same metrics as \citep{fort2023bigfoot} (so we can compare results), but there should be some discussion regarding evaluation on other tasks}
+\fillhere{As RQ1 presents a very similar idea to \citep{fort2023bigfoot}, with some significant differences, we will be using the same metrics as them and comparing results between our paper and theirs. For RQ2 we plan to compare the internal representations of conspiracy texts and calculate their similarity. For RQ3 and RQ4 we will test our final model and the baseline model on a few different publicly available training datasets and compare results between the baseline model and further pretrained model. As for RQ5 we're not sure yet.}
 
 \paragraph{General Methodology.}
 \explain{Describe your experimental pipeline in 3--5 steps. Walk the reader through how you will go from raw data to an answer for each RQ. This does not need to be exhaustive --- just enough to show the plan is concrete and well thought through.}
 \example{``(1) Preprocess and reformat WikiAnn splits for all seven target languages. (2) Fine-tune XLM-R and mBERT on the English training split only (zero-shot transfer setup). (3) Evaluate all models on each target language test set and record F\textsubscript{1} per language and entity type (RQ1). (4) Correlate error rates with language-level features such as morphological complexity and script type (RQ2). (5) Apply the pivot-data adaptation strategy and re-evaluate on the three lowest-resource languages (RQ3).''}
-\fillhere{You can write something about masking}
+\fillhere{(1) Choosing a randomized subset of the LOCO dataset and splitting this into a smaller, randomized dataset and creating an 80/10/10 split of training/developement/test data \citep{fort2023bigfoot}. (2) Determining maskable tokens by masking named entities and nouns, and then masking a percentage of the tokens. (3) Training Llama-3.1-8B with dynamic masking. (4) Extracting conspiracy markers by observing model prediction differences. (5) Evaluating the results for each RQ and concluding the research.}
 
 \paragraph{Risks.}
 \explain{What could go wrong? For each risk, state the impact on your RQs, and your mitigation or fallback plan.}
 \example{``\textit{Data availability:} WikiAnn coverage for two target languages is sparse ($<$1k sentences); if quality is insufficient we will fall back to silver data generated via projection from a related high-resource language. \textit{Compute:} Fine-tuning XLM-R\textsubscript{large} requires significant GPU memory; if unavailable we will use the base variant, which has been shown to close 85\% of the gap at a fraction of the cost.''}
-\fillhere{I am sure you can think of something.}
+\fillhere{ \textit{No experimental proof to support RQ1}: As RQ1 relies of previous research from \citep{fort2023bigfoot}, it is possible we will not be able to reproduce their results. In that case we will aim to prove the opposite of what RQ1 aims to achieve and comment the difference between our findings and \citep{fort2023bigfoot}.
+\textit{Compute requirements }: Llama-3.1 collection can be demanding for the GPU even at its smaller size (Llama-3.1-8B). If this proves to be true during our experiment, we will switch to a smaller model such as Mistral-7B-v0.1 that will not impact the RQ's greatly.}
 
 % ============================================================
 % SECTION 7 — JUSTIFICATION FOR API CREDITS
@@ -339,8 +338,14 @@ But we should investigate other work a bit more because there probably is someth
 
 \guideline{Alternative plan: if you do not receive credits, what is your fallback?}
 \example{``We will restrict the study to the four languages for which labeled data already exists, narrowing the scope of RQ3 but keeping the core contributions intact.''}
-
-\fillhere{<Your justification, following the structure above. Approx.\ 150 words.>}
+\paragraph{Use case.}
+\fillhere{
+API Credits would enable us to use a model such as GPT-4 as our baseline model. Using one of the best performing models currently available would allow us to better extract conspiracy markers and language pattern nuances in the conspiracy theory text overall positively impacting on our RQs.
+}
+\paragraph{Alternative plan.}
+\fillhere{
+Not receiving API Credits will impact our RQs as we rely only on Open-Source models of a considerably smaller size and compute abilities. Our plan is to answer the RQs with the given resources (Llama-3.1-8B) and note in our research the possibility of our results being impacted by the models size and ability.
+}
 
 % ============================================================
 % REFERENCES

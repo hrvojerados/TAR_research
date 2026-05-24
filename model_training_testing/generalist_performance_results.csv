@@ -1,0 +1,4 @@
+text_type,trained_on,tested_on,f1,accuracy
+ner_masked_text,None,None,1.0,1.0
+ner_masked_text,None,other,1.0,1.0
+ner_masked_text,None,pizzagate,1.0,1.0
