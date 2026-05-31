@@ -1,98 +1,106 @@
-import torch
-import shap
-import numpy as np
+import os
+import glob
 import json
-from transformers import pipeline, AutoModelForSequenceClassification, AutoTokenizer
-from datasets import load_from_disk # If you saved it, otherwise just use your existing df
 import pandas as pd
+import torch
+import gc
+import shap
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
 from collections import defaultdict
 
 # ================= CONFIGURATION =================
-MODEL_PATH = "../model_training_testing/results_ner_masked_text/checkpoint-6"
-# 1. "raw_text" 
-# 2. "ner_masked_text" (Named Entities)
-# 3. "noun_masked_text" (Entities + Nouns)
-TEXT_COLUMN = "ner_masked_text"
-DEVICE = -1 # -1 for CPU, 0 for GPU
-MAX_SAMPLES = 50 # Start small! SHAP is very slow on CPU.
+MODEL_DIR = "./models"  # Your models folder
+DATA_DIR = "../data/finalDataset"
+TEXT_TYPES = ["raw_text", "ner_masked_text", "noun_masked_text"]
+TOPICS = ["climate_change", "illuminati", "vaccine"]
+
+MAX_SAMPLES = 100       # How many test rows to explain? (SHAP is slow, start with 100)
+DEVICE = 0 if torch.cuda.is_available() else -1
 # =================================================
 
-def calculate_shap_contributions():
-  # 1. Load Model and Tokenizer
-  print(f"Loading model from {MODEL_PATH}...")
-  model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
-  tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
+def get_latest_checkpoint(path):
+  checkpoints = glob.glob(os.path.join(path, "checkpoint-*"))
+  if not checkpoints:
+    return path if os.path.exists(os.path.join(path, "config.json")) else None
+  return sorted(checkpoints, key=lambda x: int(x.split('-')[-1]))[-1]
 
-  # 2. Create a Pipeline
-  # SHAP works best with a transformers pipeline
+def process_shap_for_type(text_type):
+  print(f"\n{'='*40}\nANALYZING: {text_type}\n{'='*40}")
+  
+  # 1. Load the Combined Model for this text type
+  model_path = get_latest_checkpoint(f"../model_training_testing/models/COMBINED_{text_type}")
+  if not model_path:
+    print(f"Skipping {text_type}: No model found.")
+    return
+  
+  model = AutoModelForSequenceClassification.from_pretrained(model_path).to("cuda" if DEVICE == 0 else "cpu")
+  tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+  # 2. Setup Pipeline
   pred_pipeline = pipeline(
     "text-classification", 
     model=model, 
     tokenizer=tokenizer, 
-    device=DEVICE,
-    top_k=None # Returns probabilities for all classes
+    device=DEVICE, 
+    top_k=None
   )
 
-  # 3. Prepare Data
-  # Assuming you have your test_df from the previous script
-  # For this example, let's load a subset of the text
-  test_df = pd.read_csv("../data/finalDataset/test.csv") # Adjust path
-  # Filter for the topic you trained on
+  # 3. Prepare Test Data (Merging all topics for the combined test)
+  test_dfs = [pd.read_csv(f"{DATA_DIR}/test_{topic}.csv") for topic in TOPICS]
+  test_df = pd.concat(test_dfs).sample(n=MAX_SAMPLES, random_state=42)
+  texts = test_df[text_type].tolist()
 
-  # test_df = test_df[test_df['topic'].str.lower() == "illuminati"].head(MAX_SAMPLES)
-  
-  raw_texts = test_df[TEXT_COLUMN].tolist()
-  def truncate_to_bert_limit(text, max_tokens=510):
+  def truncate_to_bert_limit(text, max_tokens=500):
     # We tokenize, slice the first 510 tokens, and decode back to string
     # We use 510 to leave room for [CLS] and [SEP] tokens
     tokens = tokenizer.encode(text, truncation=True, max_length=max_tokens, add_special_tokens=False)
     return tokenizer.decode(tokens)
 
   print("Truncating long texts...")
-  texts = [truncate_to_bert_limit(t) for t in raw_texts]
-  # 4. Initialize SHAP Explainer
-  # This explainer is optimized for NLP models
-  explainer = shap.Explainer(pred_pipeline)
+  texts = [truncate_to_bert_limit(t) for t in texts]
 
-  print(f"Calculating SHAP values for {len(texts)} samples... (This will take time)")
+  # 4. Run SHAP
+  # We use a custom masker to handle BERT subwords correctly
+  explainer = shap.Explainer(pred_pipeline)
   shap_values = explainer(texts)
 
-  # 5. Aggregate Values
-  # shap_values.values is an array of [samples, tokens, classes]
-  # We want class 1 (Conspiracy)
-  # If the model output is [Mainstream, Conspiracy], class 1 is Conspiracy.
-  
-  token_importance = defaultdict(float)
-  token_counts = defaultdict(int)
+  # 5. Aggregate token contributions
+  token_stats = defaultdict(lambda: {"total_shap": 0.0, "count": 0})
 
-  # Iterate through each document in the SHAP output
+  # shap_values.values shape: [samples, tokens, classes]
+  # We want index 1 (Conspiracy)
   for i in range(len(shap_values)):
-    doc_tokens = shap_values.data[i]     # The actual strings (tokens)
-    doc_values = shap_values.values[i]   # The SHAP values for each token
+    tokens = shap_values.data[i]
+    scores = shap_values.values[i][:, 1] # Class 1 (Conspiracy)
     
-    # doc_values has shape (num_tokens, 2)
-    # We take index 1 for the 'Conspiracy' class
-    conspiracy_scores = doc_values[:, 1]
-
-    for token, score in zip(doc_tokens, conspiracy_scores):
-      token = token.strip()
-      if token == "": continue
+    for token, score in zip(tokens, scores):
+      clean_token = token.strip().lower()
+      if clean_token == "" or clean_token in ["[cls]", "[sep]", "[pad]"]:
+        continue
       
-      # We use absolute value to find "most influential" 
-      # or raw value to find "most predictive of conspiracy"
-      token_importance[token] += score 
-      token_counts[token] += 1
+      token_stats[clean_token]["total_shap"] += score
+      token_stats[clean_token]["count"] += 1
 
-  # 6. Save results
-  result_data = {
-    "importance": dict(token_importance),
-    "counts": dict(token_counts)
-  }
-  
-  with open("shap_token_results.json", "w") as f:
-    json.dump(result_data, f)
-  
-  print("Done! Results saved to shap_token_results.json")
+  # 6. Calculate Averages and Save
+  final_list = []
+  for token, stats in token_stats.items():
+    final_list.append({
+      "token": token,
+      "avg_shap": stats["total_shap"] / stats["count"],
+      "frequency": stats["count"]
+    })
+
+  df_results = pd.DataFrame(final_list).sort_values(by="avg_shap", ascending=False)
+  output_file = f"shap_analysis_{text_type}.csv"
+  df_results.to_csv(output_file, index=False)
+  print(f"Saved top 20 tokens for {text_type}:")
+  print(df_results.head(20))
+
+  # Cleanup memory
+  del model, pred_pipeline, explainer, shap_values
+  gc.collect()
+  torch.cuda.empty_cache()
 
 if __name__ == "__main__":
-  calculate_shap_contributions()
+  for t_type in TEXT_TYPES:
+    process_shap_for_type(t_type)

@@ -1,141 +1,131 @@
+import os
 import pandas as pd
 import numpy as np
 import torch
+import gc
+import evaluate
+from torch import nn
 from datasets import Dataset, DatasetDict
 from transformers import (
-  AutoTokenizer, 
-  AutoModelForSequenceClassification, 
-  TrainingArguments, 
-  Trainer,
-  DataCollatorWithPadding
+    AutoTokenizer, 
+    AutoModelForSequenceClassification, 
+    TrainingArguments, 
+    Trainer,
+    DataCollatorWithPadding,
+    EarlyStoppingCallback
 )
-import evaluate
 
 # ================= CONFIGURATION =================
-# Choose which experiment to run: 
-# 1. "raw_text" 
-# 2. "ner_masked_text" (Named Entities)
-# 3. "noun_masked_text" (Entities + Nouns)
-TEXT_COLUMN = "ner_masked_text" 
-
 MODEL_NAME = "bert-base-uncased"
-MAX_LENGTH = 512   # Max for BERT
-BATCH_SIZE = 8     # Small batch to prevent Colab OOM
-ACCUMULATION = 2   # Effective batch size = 8 * 2 = 16
-EPOCHS = 3
-LEARNING_RATE = 2e-5
-# =================================================
-def prepare_loco_subset(df, target_topic=None, n_samples=None, random_seed=42):
-  """
-  Filters by topic, samples the data, and converts labels to 0/1.
-  """
-  # 1. Map labels to integers
-  label_map = {'mainstream': 0, 'conspiracy': 1}
-  df['label'] = df['subcorpus'].map(label_map)
-  
-  # 2. Filter by Topic (if specified)
-  if target_topic:
-    # Case-insensitive filtering
-    df = df[df['topic'].str.lower() == target_topic.lower()].copy()
+TOPICS = ["climate_change", "illuminati", "vaccine"]
+TEXT_TYPES = ["raw_text", "ner_masked_text", "noun_masked_text"]
 
-  # 3. Fix the Size (Sampling)
-  if n_samples and n_samples < len(df):
-    df = df.sample(n=n_samples, random_state=random_seed).reset_index(drop=True)
-  elif n_samples and n_samples > len(df):
-    print(f"Warning: Requested {n_samples} but only {len(df)} available for topic '{target_topic}'")
+MAX_LENGTH = 512
+BATCH_SIZE = 32
+ACCUMULATION = 2
+EPOCHS = 20           # Increased epochs, but EarlyStopping will cut it short
+LEARNING_RATE = 2e-5
+DATA_DIR = "../data/finalDataset" 
+os.makedirs("models", exist_ok=True)
+
+# 1. Custom Trainer to boost F1 (Weighted CrossEntropy)
+class WeightedTrainer(Trainer):
+  def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+    labels = inputs.get("labels")
+    outputs = model(**inputs)
+    logits = outputs.get("logits")
+    # Boost the conspiracy class (1) to improve Recall/F1
+    # [Weight for Mainstream, Weight for Conspiracy]
+    weights = torch.tensor([1.0, 2.0]).to(model.device) 
+    loss_fct = nn.CrossEntropyLoss(weight=weights)
+    loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
+    return (loss, outputs) if return_outputs else loss
+
+# 2. Simplified Loading (Uses 100% of your provided files)
+def load_full_df(path, text_col):
+  df = pd.read_csv(path)
+  label_map = {'mainstream': 0, 'conspiracy': 1}
+  if 'subcorpus' in df.columns:
+    df['label'] = df['subcorpus'].map(label_map)
+  else:
+    # Fallback if label column is named differently
+    df['label'] = df['label'].map(label_map)
+  
+  df = df[[text_col, 'label']].rename(columns={text_col: "text"})
   return df
 
-# 1. Load your raw files
-df_train_raw = pd.read_csv("../data/finalDataset/train.csv")
-df_val_raw   = pd.read_csv("../data/finalDataset/val.csv")
-df_test_raw  = pd.read_csv("../data/finalDataset/test.csv")
-
-# 2. Filter them
-TOPIC = None
-SIZE_train = 200
-SIZE_val = None
-SIZE_test = None
-
-train_df = prepare_loco_subset(df_train_raw, target_topic=TOPIC, n_samples=SIZE_train)
-val_df   = prepare_loco_subset(df_val_raw,   target_topic=TOPIC, n_samples=SIZE_val) # Keep all dev for better val
-test_df  = prepare_loco_subset(df_test_raw,  target_topic=TOPIC, n_samples=SIZE_test)
-
-# 3. Convert to HuggingFace format
-dataset = DatasetDict({
-  "train": Dataset.from_pandas(train_df),
-  "validation": Dataset.from_pandas(val_df),
-  "test": Dataset.from_pandas(test_df)
-})
-
-# 4. Now run the training loop (using the script from the previous message)
-# Use 'raw text', 'ner_masked_text', or 'noun_masked_text' as TEXT_COLUMN
-
-# 2. Tokenization
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-
-def tokenize_fn(examples):
-  # This tokenizes the specific column chosen in CONFIG
-  return tokenizer(
-    examples[TEXT_COLUMN], 
-    truncation=True, 
-    max_length=MAX_LENGTH
-  )
-
-# Map tokenization across all splits
-tokenized_datasets = dataset.map(tokenize_fn, batched=True)
-
-# Data collator handles dynamic padding for efficiency
-data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
-
-# 3. Metrics (Accuracy and F1)
 acc_metric = evaluate.load("accuracy")
 f1_metric = evaluate.load("f1")
 
 def compute_metrics(eval_pred):
   logits, labels = eval_pred
   predictions = np.argmax(logits, axis=-1)
-  acc = acc_metric.compute(predictions=predictions, references=labels)
-  f1 = f1_metric.compute(predictions=predictions, references=labels)
-  return {**acc, **f1}
+  return {
+    "accuracy": acc_metric.compute(predictions=predictions, references=labels)["accuracy"],
+    "f1": f1_metric.compute(predictions=predictions, references=labels)["f1"]
+  }
 
-# 4. Model Setup
-model = AutoModelForSequenceClassification.from_pretrained(
-  MODEL_NAME, 
-  num_labels=2
-)
+# --- START TRAINING LOOP ---
+for text_type in TEXT_TYPES:
+  for topic in TOPICS:
+    run_name = f"{topic}_{text_type}"
+    output_dir = f"./models/{run_name}"
+    print(f"\n{'='*30}\nRUNNING: {run_name}\n{'='*30}")
 
-# 5. Training Arguments (Optimized for Colab)
-training_args = TrainingArguments(
-  output_dir=f"./results_{TEXT_COLUMN}_{TOPIC}",
-  eval_strategy="epoch",
-  save_strategy="epoch",
-  learning_rate=LEARNING_RATE,
-  per_device_train_batch_size=BATCH_SIZE,
-  per_device_eval_batch_size=BATCH_SIZE,
-  gradient_accumulation_steps=ACCUMULATION, # Tricks for memory
-  num_train_epochs=EPOCHS,
-  weight_decay=0.01,
-  load_best_model_at_end=True,
-  metric_for_best_model="f1",
-  fp16=True,               # Use Mixed Precision (faster/less memory)
-  report_to="none"
-)
+    # Load your exact datasets
+    train_df = load_full_df(f"{DATA_DIR}/train_{topic}.csv", text_type)
+    val_df   = load_full_df(f"{DATA_DIR}/val_{topic}.csv",   text_type)
+    test_df  = load_full_df(f"{DATA_DIR}/test_{topic}.csv",  text_type)
 
-# 6. Initialize Trainer
-trainer = Trainer(
-  model=model,
-  args=training_args,
-  train_dataset=tokenized_datasets["train"],
-  eval_dataset=tokenized_datasets["validation"],
-  processing_class=tokenizer,
-  data_collator=data_collator,
-  compute_metrics=compute_metrics,
-)
+    ds = DatasetDict({
+      "train": Dataset.from_pandas(train_df),
+      "validation": Dataset.from_pandas(val_df),
+      "test": Dataset.from_pandas(test_df)
+    })
 
-# 7. Train
-trainer.train()
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    tokenized_ds = ds.map(lambda x: tokenizer(x["text"], truncation=True, max_length=MAX_LENGTH), 
+                          batched=True, remove_columns=["text"])
 
-# 8. Final Evaluation on Test Set
-print(f"\n FINAL TEST RESULTS FOR: {TEXT_COLUMN} {TOPIC}")
-test_results = trainer.evaluate(tokenized_datasets["test"])
-print(test_results)
+    model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=2)
+
+    # 3. Enhanced Training Arguments
+    args = TrainingArguments(
+      output_dir=output_dir,
+      eval_strategy="epoch",
+      save_strategy="epoch",
+      learning_rate=LEARNING_RATE,
+      per_device_train_batch_size=BATCH_SIZE,
+      per_device_eval_batch_size=BATCH_SIZE,
+      gradient_accumulation_steps=ACCUMULATION,
+      num_train_epochs=EPOCHS,
+      weight_decay=0.1,            # Higher decay to prevent overfitting on small data
+      warmup_ratio=0.1,            # 10% of steps used to ramp up LR
+      load_best_model_at_end=True,
+      metric_for_best_model="f1",  # Prioritize F1 over Accuracy
+      fp16=True, 
+      report_to="none",
+      save_total_limit=1           # Save space
+    )
+
+    trainer = WeightedTrainer(
+      model=model,
+      args=args,
+      train_dataset=tokenized_ds["train"],
+      eval_dataset=tokenized_ds["validation"],
+      processing_class=tokenizer,
+      data_collator=DataCollatorWithPadding(tokenizer=tokenizer),
+      compute_metrics=compute_metrics,
+      # Stops training if F1 doesn't improve for 2 epochs
+      callbacks=[EarlyStoppingCallback(early_stopping_patience=5)] 
+    )
+
+    trainer.train()
+
+    print(f"\nFinal Test Results for {run_name}:")
+    print(trainer.evaluate(tokenized_ds["test"]))
+
+    # Cleanup for next topic
+    del model, trainer
+    gc.collect()
+    torch.cuda.empty_cache()

@@ -92,7 +92,7 @@ def main():
   to_process = df[~df.index.isin(processed_indices)]
   
   # Optional: limit for testing
-  to_process = to_process.head(5) 
+  to_process = to_process.head(30000) 
 
   print(f"Starting classification on {len(to_process)} rows...")
 

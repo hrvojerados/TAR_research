@@ -1,78 +1,80 @@
 import os
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
-
-def create_balanced_splits(filepath, train_size=0.80, val_size=0.10, test_size=0.10):
-  # 1. Load the dataset
+def create_specific_topic_splits(filepath, output_dir="finalDataset"):
+  # 1. Učitavanje podataka
   df = pd.read_csv(filepath)
+  os.makedirs(output_dir, exist_ok=True)
 
-  # Check if dataset is too small to split safely
-  min_required_samples = 3  # Need at least some rows per group to split
-  group_counts = df.groupby(["topic", "subcorpus"]).size()
+  # Definiramo ciljane brojeve (prema tvojoj slici)
+  # Za Illuminati koristimo prosjek ostalih jer ga nema na slici
+  targets = {
+    "vaccine": {
+      "train": {"mainstream": 796, "conspiracy": 268},
+      "val":   {"mainstream": 104, "conspiracy": 29},
+      "test":  {"mainstream": 100, "conspiracy": 33}
+    },
+    "climate change": {
+      "train": {"mainstream": 799, "conspiracy": 265},
+      "val":   {"mainstream": 99,  "conspiracy": 34},
+      "test":  {"mainstream": 102, "conspiracy": 31}
+    },
+    "illuminati": { # Procjena bazirana na ostalima
+      "train": {"mainstream": 700, "conspiracy": 260},
+      "val":   {"mainstream": 62, "conspiracy": 35},
+      "test":  {"mainstream": 61, "conspiracy": 35}
+    }
+  }
 
-  print("--- Current Group Counts ---")
-  print(group_counts)
-  print("-" * 30)
+  topics_to_process = ["vaccine", "climate change", "illuminati"]
 
-  # Temporary fallback for testing your 20-row dataset
-  if df.shape[0] < 30:
-    print(
-      "\n⚠️ WARNING: Dataset is currently too small for true stratification."
-    )
-    print("Running a basic random split just so your pipeline doesn't break.")
-    # Simple random split for your 20 rows just to test execution
-    train, temp = train_test_split(df, test_size=0.20, random_state=42)
-    val, test = train_test_split(temp, test_size=0.50, random_state=42)
-    return train, val, test
+  for topic in topics_to_process:
+    print(f"\n--- Obrađujem topic: {topic.upper()} ---")
+    
+    # Filtriraj podatke samo za taj topic
+    topic_df = df[df['topic'].str.lower() == topic.lower()]
+    
+    if topic_df.empty:
+      print(f"⚠️ Topic '{topic}' nije pronađen u datasetu. Preskačem...")
+      continue
 
-  # 2. Advanced Split logic for when your full data arrives
-  train_subs = []
-  val_subs = []
-  test_subs = []
+    # Razdvoji na mainstream i conspiracy
+    # Provjeri točne nazive u svom CSV-u (možda su s velikim početnim slovom)
+    mainstream_pool = topic_df[topic_df['subcorpus'].str.lower() == 'mainstream'].sample(frac=1, random_state=42)
+    conspiracy_pool = topic_df[topic_df['subcorpus'].str.lower() == 'conspiracy'].sample(frac=1, random_state=42)
 
-  # Group by both columns to isolate each block (e.g., vaccine + conspiracy)
-  grouped = df.groupby(["topic", "subcorpus"])
+    splits = ["train", "val", "test"]
+    
+    for split in splits:
+      n_main = targets[topic][split]["mainstream"]
+      n_cons = targets[topic][split]["conspiracy"]
 
-  for name, group in grouped:
-    # Check if the specific sub-group has enough rows to split
-    if len(group) < 3:
-      # Too small to split proportionally; assign randomly to prevent crashes
-      train_g, temp_g = train_test_split(group, test_size=0.20, random_state=42)
-      val_g, test_g = train_test_split(temp_g, test_size=0.50, random_state=42)
-    else:
-      # Split the group into Train (80%) and Temp (20%)
-      train_g, temp_g = train_test_split(
-        group, test_size=(val_size + test_size), random_state=42
-      )
-      # Split Temp into Val (50% of temp) and Test (50% of temp)
-      val_g, test_g = train_test_split(
-        temp_g,
-        test_size=(test_size / (val_size + test_size)),
-        random_state=42,
-      )
+      # Provjera imamo li dovoljno podataka, ako nemamo uzmi sve dostupno
+      if len(mainstream_pool) < n_main:
+        print(f"  ! Manjak mainstream podataka za {split} ({len(mainstream_pool)}/{n_main})")
+        n_main = len(mainstream_pool)
+      
+      if len(conspiracy_pool) < n_cons:
+        print(f"  ! Manjak conspiracy podataka za {split} ({len(conspiracy_pool)}/{n_cons})")
+        n_cons = len(conspiracy_pool)
 
-    train_subs.append(train_g)
-    val_subs.append(val_g)
-    test_subs.append(test_g)
+      # Uzorkovanje
+      m_part = mainstream_pool.iloc[:n_main]
+      c_part = conspiracy_pool.iloc[:n_cons]
 
-  # Combine all the balanced pieces back together
-  train_df = pd.concat(train_subs).sample(frac=1, random_state=42).reset_index(drop=True)
-  val_df = pd.concat(val_subs).sample(frac=1, random_state=42).reset_index(drop=True)
-  test_df = pd.concat(test_subs).sample(frac=1, random_state=42).reset_index(drop=True)
+      # Micanje iskorištenih redaka iz "poola" da se ne ponavljaju u splitovima
+      mainstream_pool = mainstream_pool.iloc[n_main:]
+      conspiracy_pool = conspiracy_pool.iloc[n_cons:]
 
-  return train_df, val_df, test_df
+      # Spajanje i spremanje
+      final_split_df = pd.concat([m_part, c_part]).sample(frac=1, random_state=42)
+      
+      filename = f"{split}_{topic.replace(' ', '_')}.csv"
+      save_path = os.path.join(output_dir, filename)
+      final_split_df.to_csv(save_path, index=False)
+      
+      print(f"  ✅ Spremljeno: {filename} (M: {len(m_part)}, C: {len(c_part)})")
 
-
-# --- EXECUTION ---
-# Replace with your actual filename
-csv_filename = "finalDataset/final_experimental_dataset.csv"
-
-train_set, val_set, test_set = create_balanced_splits(csv_filename)
-
-# Save the subsets
-train_set.to_csv("finalDataset/train.csv", index=False)
-val_set.to_csv("finalDataset/val.csv", index=False)
-test_set.to_csv("finalDataset/test.csv", index=False)
-
-print(f"\nDone! Saved {len(train_set)} train, {len(val_set)} val, and {len(test_set)} test rows.")
+# --- IZVRŠAVANJE ---
+csv_path = "finalDataset/final_experimental_dataset.csv"
+create_specific_topic_splits(csv_path)

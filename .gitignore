@@ -3,3 +3,7 @@ LOCO_LFs.json
 topic_gamma.json
 topic_by_time.pdf
 checkpoint*
+finalDataset*
+oldDataSplit*
+data/classified/classified_loco.csv
+data/finalDataset/final_experimental_dataset.csv
